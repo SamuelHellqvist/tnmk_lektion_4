@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Lektion 4</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="lektion3.js"defer></script>
+    </head>
+    
+    <body>
+
+      <?php
+        session_start();
+        if(isset($_GET['lang'])){
+            $lang = $_GET['lang'];
+            $_SESSION['lang'] = $lang;
+            setcookie('lang', $lang, time() + (3600 * 24 *30));
+
+        }else if(isset($_SESSION['lang'])){
+            $lang = $_SESSION['lang'];
+        }else if(isset($_COOKIE['lang'])){
+            $lang = $_COOKIE['lang'];
+        }else{
+            $lang = 'sv';
+        }
+
+        $lang_file = 'lang.'.$lang.'.php';
+
+        include_once $lang_file;
+    ?>
+
+     <ul class="header">
+        <li><a href="index.php"><?php echo $lang['menuIntro']; ?></a></li>
+        <li><a href="lektion2.php"><?php echo $lang['menuHTML']; ?></a></li>
+        <li><a href="lektion3.php"><?php echo $lang['menuJS']; ?></a></li>
+        <li><a href="?lang=sv">Svenska</a></li>
+        <li><a href="?lang=en">Engelska</a></li>
+    </ul>
